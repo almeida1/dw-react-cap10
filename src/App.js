@@ -1,25 +1,39 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from "react";
+import Menu from "./componentes/Menu";
+import TabelaLivros from "./componentes/TabelaLivros";
+import logo from "./cps.png";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
+class App extends Component {
+  state = {
+    livros: [
+      {
+        id: 1,
+        isbn: "978-85-7522-403-8",
+        titulo: "HTML5 - 2ª Edição",
+        autor: "Maurício Samy Silva",
+      },
+      {
+        id: 2,
+        isbn: "978-85-7522-807-4",
+        titulo: "Introdução ao Pentest",
+        autor: "Daniel Moreno",
+      },
+      {
+        id: 3,
+        isbn: "978-85-7522-780-8",
+        titulo: "Internet das Coisas para Desenvolvedores",
+        autor: "Ricardo da Silva Ogliari",
+      },
+    ],
+  };
+  render() {
+    return (
+      <div className="App">
         <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+        <Menu />
+        <TabelaLivros livros={this.state.livros} />
+      </div>
+    );
+  }
 }
-
 export default App;
