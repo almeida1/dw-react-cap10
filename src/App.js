@@ -4,6 +4,7 @@ import CadastrarLivros from "./componentes/CadastrarLivros";
 import Menu from "./componentes/Menu";
 import TabelaLivros from "./componentes/TabelaLivros";
 import NotFound from "./componentes/NotFound";
+import "./index.css";
 class App extends Component {
   state = {
     livros: [
@@ -35,10 +36,10 @@ class App extends Component {
           <Route
             exact
             path="/"
-            render={() => <TabelaLivros livros={this.state.livros} />}
+            element={<TabelaLivros livros={this.state.livros} />}
           />
-          <Route exact path="/cadastrar" render={() => <CadastrarLivros />} />
-          <Route Component={NotFound} />
+          <Route exact path="/cadastrar" element={<CadastrarLivros />} />
+          <Route component={NotFound} />
         </Routes>
       </Router>
     );
