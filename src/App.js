@@ -1,8 +1,9 @@
 import React, { Component } from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import CadastrarLivros from "./componentes/CadastrarLivros";
 import Menu from "./componentes/Menu";
 import TabelaLivros from "./componentes/TabelaLivros";
-import logo from "./cps.png";
-
+import NotFound from "./componentes/NotFound";
 class App extends Component {
   state = {
     livros: [
@@ -28,12 +29,20 @@ class App extends Component {
   };
   render() {
     return (
-      <div className="App">
-        <img src={logo} className="App-logo" alt="logo" />
+      <Router>
         <Menu />
-        <TabelaLivros livros={this.state.livros} />
-      </div>
+        <Routes>
+          <Route
+            exact
+            path="/"
+            render={() => <TabelaLivros livros={this.state.livros} />}
+          />
+          <Route exact path="/cadastrar" render={() => <CadastrarLivros />} />
+          <Route Component={NotFound} />
+        </Routes>
+      </Router>
     );
   }
 }
+
 export default App;
