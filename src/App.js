@@ -4,7 +4,9 @@ import CadastrarLivros from "./componentes/CadastrarLivros";
 import Menu from "./componentes/Menu";
 import TabelaLivros from "./componentes/TabelaLivros";
 import NotFound from "./componentes/NotFound";
+
 import "./index.css";
+import { Navigate } from "react-router-dom";
 class App extends Component {
   state = {
     livros: [
@@ -34,6 +36,16 @@ class App extends Component {
       livros: [...this.state.livros, livro],
     });
   };
+  editarLivro = (livro) => {
+    const index = this.state.livros.findIndex((p) => p.id === livro.id);
+    const livros = this.state.livros
+      .slice(0, index)
+      .concat(this.state.livros.slice(index + 1));
+    const newLivros = [...livros, livro].sort((a, b) => a.id - b.id);
+    this.setState({
+      livros: newLivros,
+    });
+  };
   render() {
     return (
       <Router>
@@ -47,14 +59,23 @@ class App extends Component {
           <Route
             exact
             path="/cadastrar"
-            element={
+            render={
               <CadastrarLivros
                 inserirLivro={this.inserirLivro}
                 livro={{ id: 0, isbn: "", titulo: "", autor: "" }}
               />
             }
           />
-
+          <Route
+            exact={true}
+            path="/editar/:isbnLivro"
+            element={
+              <CadastrarLivros
+                editarLivro={this.editarLivro}
+                livro={{ id: 0, isbn: "", titulo: "", autor: "" }}
+              />
+            }
+          />
           <Route component={NotFound} />
         </Routes>
       </Router>
