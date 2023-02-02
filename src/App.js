@@ -1,12 +1,17 @@
 import React, { Component } from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
 import CadastrarLivros from "./componentes/CadastrarLivros";
 import Menu from "./componentes/Menu";
 import TabelaLivros from "./componentes/TabelaLivros";
 import NotFound from "./componentes/NotFound";
 
 import "./index.css";
-import { Navigate } from "react-router-dom";
+
 class App extends Component {
   state = {
     livros: [
@@ -67,14 +72,23 @@ class App extends Component {
             }
           />
           <Route
-            exact={true}
+            exact
             path="/editar/:isbnLivro"
-            element={
-              <CadastrarLivros
-                editarLivro={this.editarLivro}
-                livro={{ id: 0, isbn: "", titulo: "", autor: "" }}
-              />
-            }
+            render={(props) => {
+              const livro = this.state.livros.find(
+                (livro) => livro.isbn === props.match.params.isbnLivro
+              );
+              if (livro) {
+                return (
+                  <CadastrarLivros
+                    editarLivro={this.editarLivro}
+                    livro={livro}
+                  />
+                );
+              } else {
+                return <Navigate to="/" />;
+              }
+            }}
           />
           <Route component={NotFound} />
         </Routes>
